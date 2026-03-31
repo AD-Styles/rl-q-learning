@@ -57,7 +57,7 @@ python train.py
 ## 6. 실험 결과 및 분석 (Results & Analysis)
 환경의 불확실성(`is_slippery`) 여부에 따른 학습 성능을 비교 분석했습니다.
 
-![Learning Curve](https://via.placeholder.com/800x400.png?text=Learning+Curve+Graph+(Replace+with+your+image))
+![Learning Curve](learning_curve.png)
 
 | 환경 난이도 | 랜덤 에이전트 성공률 | Q-Learning 성공률 | 분석 포인트 |
 | :--- | :--- | :--- | :--- |
