@@ -1,6 +1,7 @@
 import numpy as np
 from q_agent import QLearningAgent
 from environment import FrozenLakeManager
+from utils import plot_learning_curve  # 새롭게 추가된 시각화 모듈 임포트
 
 def train_agent(episodes: int = 5000, is_slippery: bool = False):
     """
@@ -51,5 +52,8 @@ def train_agent(episodes: int = 5000, is_slippery: bool = False):
     return rewards_history, agent.q_table
 
 if __name__ == "__main__":
-    # 결정적 환경(미끄러지지 않음)에서 5000번 학습 실행
+    # 1. 결정적 환경(미끄러지지 않음)에서 5000번 학습 실행
     history, final_q_table = train_agent(episodes=5000, is_slippery=False)
+    
+    # 2. 새롭게 추가된 부분: 학습이 끝난 후 utils.py의 시각화 함수 호출
+    plot_learning_curve(history, window=100, save_path="learning_curve.png")
