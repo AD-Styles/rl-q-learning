@@ -16,13 +16,13 @@ class QLearningAgent:
         self.state_size = state_size
         self.action_size = action_size
         
-        self.lr = learning_rate        # 새 정보를 받아들이는 속도 [cite: 261]
-        self.gamma = gamma             # 미래 보상에 대한 할인율 [cite: 263]
+        self.lr = learning_rate        # 새 정보를 받아들이는 속도
+        self.gamma = gamma             # 미래 보상에 대한 할인율
         self.epsilon = epsilon         # 초기 탐험 확률
-        self.epsilon_decay = epsilon_decay # 탐험 축소 비율 [cite: 385]
+        self.epsilon_decay = epsilon_decay # 탐험 축소 비율
         self.min_epsilon = min_epsilon
         
-        # Q-Table을 모두 0으로 초기화 (상태 수 x 행동 수) [cite: 395, 396]
+        # Q-Table을 모두 0으로 초기화 (상태 수 x 행동 수)
         self.q_table = np.zeros((state_size, action_size)) 
 
     def choose_action(self, state: int) -> int:
@@ -30,10 +30,10 @@ class QLearningAgent:
         Epsilon-Greedy 정책에 따라 탐험(Exploration) 또는 활용(Exploitation)을 선택합니다.
         """
         if np.random.random() < self.epsilon:
-            # 탐험: 랜덤 행동 선택 [cite: 374, 376]
+            # 탐험: 랜덤 행동 선택
             return np.random.randint(self.action_size) 
         else:
-            # 활용: 현재 상태에서 가장 Q값이 높은 행동 선택 [cite: 378]
+            # 활용: 현재 상태에서 가장 Q값이 높은 행동 선택
             return int(np.argmax(self.q_table[state]))
 
     def learn(self, state: int, action: int, reward: float, next_state: int, done: bool):
@@ -41,18 +41,18 @@ class QLearningAgent:
         벨만 방정식을 사용하여 Q-Table을 업데이트합니다.
         공식: Q(s,a) <- Q(s,a) + alpha * [r + gamma * max_a(Q(s',a')) - Q(s,a)] 
         """
-        # 목표 도달 또는 에피소드 종료 시 미래 가치는 0으로 처리 [cite: 406]
+        # 목표 도달 또는 에피소드 종료 시 미래 가치는 0으로 처리
         future_q = 0.0 if done else np.max(self.q_table[next_state])
         
-        # TD Target 및 오차 계산 [cite: 406, 407]
+        # TD Target 및 오차 계산
         td_target = reward + self.gamma * future_q
         td_error = td_target - self.q_table[state, action]
         
-        # Q-Table 업데이트 [cite: 408]
+        # Q-Table 업데이트
         self.q_table[state, action] += self.lr * td_error
 
     def decay_epsilon(self):
         """
-        매 에피소드 종료 후 epsilon 값을 감소시켜 점진적으로 탐험을 줄입니다. [cite: 285]
+        매 에피소드 종료 후 epsilon 값을 감소시켜 점진적으로 탐험을 줄입니다.
         """
         self.epsilon = max(self.min_epsilon, self.epsilon * self.epsilon_decay)
