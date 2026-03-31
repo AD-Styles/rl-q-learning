@@ -30,12 +30,13 @@ $$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
 ## 4. 프로젝트 구조 (Repository Structure)
 유지보수와 확장이 용이하도록 역할을 분리하여 모듈화했습니다.
 
-`├── environment.py   # FrozenLake 환경 셋업 및 래퍼 클래스`
-`├── q_agent.py       # Q-Table 관리 및 학습 알고리즘(두뇌) 클래스`
-`├── train.py         # 하이퍼파라미터 설정 및 메인 학습 루프 실행`
-`├── utils.py         # 학습 결과(성공률, 보상 등) 시각화 도구`
-`├── README.md        # 프로젝트 설명 문서`
-`└── .gitignore       `
+```text
+├── environment.py   # FrozenLake 환경 셋업 및 래퍼 클래스
+├── q_agent.py       # Q-Table 관리 및 학습 알고리즘(두뇌) 클래스
+├── train.py         # 하이퍼파라미터 설정 및 메인 학습 루프 실행
+├── utils.py         # 학습 결과(성공률, 보상 등) 시각화 도구
+├── README.md        # 프로젝트 설명 문서
+└── .gitignore
 
 ## 5. 실행 방법 (Quick Start)
 
