@@ -36,24 +36,33 @@ $$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
 ├── train.py         # 하이퍼파라미터 설정 및 메인 학습 루프 실행
 ├── utils.py         # 학습 결과(성공률, 보상 등) 시각화 도구
 ├── README.md        # 프로젝트 설명 문서
-└── .gitignore
+└── .gitignore       
+```
 
 ## 5. 실행 방법 (Quick Start)
 
 ### Requirements 설치
-`pip install numpy matplotlib gymnasium`
+```bash
+pip install numpy matplotlib gymnasium
+```
 
 ### 학습 파이프라인 실행
-결정적 환경(is_slippery=False)에서 에이전트를 5,000 에피소드 동안 학습시킵니다.
-`python train.py`
+결정적 환경(`is_slippery=False`)에서 에이전트를 5,000 에피소드 동안 학습시킵니다. 
+* **적용된 하이퍼파라미터:** 학습률($\alpha$)=0.1, 할인율($\gamma$)=0.99, 탐험률($\epsilon$)=1.0 (감소율 적용)
+
+```bash
+python train.py
+```
 
 ## 6. 실험 결과 및 분석 (Results & Analysis)
-환경의 불확실성(is_slippery) 여부에 따른 학습 성능을 비교 분석했습니다.
+환경의 불확실성(`is_slippery`) 여부에 따른 학습 성능을 비교 분석했습니다.
+
+![Learning Curve](https://via.placeholder.com/800x400.png?text=Learning+Curve+Graph+(Replace+with+your+image))
 
 | 환경 난이도 | 랜덤 에이전트 성공률 | Q-Learning 성공률 | 분석 포인트 |
 | :--- | :--- | :--- | :--- |
-| **결정적 (Deterministic)**<br>`is_slippery=False` | 1-5% | **95-100%** | 행동의 결과가 100% 보장되므로, 최적 경로(Q-Table)가 빠르게 수렴하여 완벽한 주행이 가능함. |
-| **확률적 (Stochastic)**<br>`is_slippery=True` | 1-2% | **70-80%** | 의도한 방향으로 이동할 확률이 1/3로 감소하여 미끄러짐 발생. 100% 성공은 불가능하나, 구멍을 피하는 안전한 우회 경로를 학습하는 것을 확인. |
+| **결정적 (Deterministic)**<br>`is_slippery=False` | ~1-5% | **~95-100%** | 행동의 결과가 100% 보장되므로, 최적 경로(Q-Table)가 빠르게 수렴하여 완벽한 주행이 가능함. |
+| **확률적 (Stochastic)**<br>`is_slippery=True` | ~1-2% | **~70-80%** | 의도한 방향으로 이동할 확률이 1/3로 감소하여 미끄러짐 발생. 100% 성공은 불가능하나, 구멍을 피하는 안전한 우회 경로를 학습하는 것을 확인. |
 
 ## 7. 향후 과제 (Future Work)
 본 프로젝트에서 구현한 전통적인 Q-Table 방식은 상태(State)가 한정된 FrozenLake(16개)와 같은 소규모 환경에서는 강력합니다. 
