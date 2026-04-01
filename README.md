@@ -27,6 +27,10 @@ Gymnasium 라이브러리에서 제공하는 `FrozenLake-v1` 환경을 사용했
 
 $$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
 
+### 학습 파이프라인 실행
+결정적 환경(`is_slippery=False`)에서 에이전트를 5,000 에피소드 동안 학습시킵니다. 
+* **적용된 하이퍼파라미터:** 학습률($\alpha$)=0.1, 할인율($\gamma$)=0.99, 탐험률($\epsilon$)=1.0 (감소율 적용)
+
 ## 1. 프로젝트 구조 (Repository Structure)
 유지보수와 확장이 용이하도록 역할을 분리하여 모듈화했습니다.
 
@@ -41,22 +45,7 @@ $$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
 └── README.md
 ```
 
-## 2. 실행 방법 (Quick Start)
-
-### Requirements 설치
-```bash
-pip install -r requirements.txt
-```
-
-### 학습 파이프라인 실행
-결정적 환경(`is_slippery=False`)에서 에이전트를 5,000 에피소드 동안 학습시킵니다. 
-* **적용된 하이퍼파라미터:** 학습률($\alpha$)=0.1, 할인율($\gamma$)=0.99, 탐험률($\epsilon$)=1.0 (감소율 적용)
-
-```bash
-python train.py
-```
-
-## 3. 실험 결과 및 분석 (Results & Analysis)
+## 2. 실험 결과 및 분석 (Results & Analysis)
 환경의 불확실성(`is_slippery`) 여부와 커스텀 보상 설계에 따른 학습 성능을 분석했습니다.
 
 ![Learning Curve](results/learning_curve.png)
@@ -66,7 +55,7 @@ python train.py
 | **기존 (희소 보상)** | 매우 느림 | 불안정 | 우연히 목표에 도달할 때까지 무의미한 탐험이 반복되어 자원이 낭비됨. |
 | **변경 (밀집 보상 적용)** | **빠름** | **매우 안정적 (95~100%)** | 이동 시 `-0.01`, 구멍 추락 시 `-1.0`의 패널티를 부여하여, 에이전트가 실패 경로를 빠르게 배제하고 성공 확률을 극대화함. |
 
-## 4. 하이퍼파라미터 최적화 실험 (Hyperparameter Tuning)
+## 3. 하이퍼파라미터 최적화 실험 (Hyperparameter Tuning)
 단일 학습에 그치지 않고, 자동화된 파라미터 탐색 루프를 구축하여 학습률($\alpha$)과 할인율($\gamma$)의 최적 조합을 실험적으로 도출했습니다.
 
 | 튜닝 변수 | 실험 후보군 | 실험 결과 및 인사이트 |
@@ -76,7 +65,7 @@ python train.py
 
 **🏆 결론:** 그리드 서치(Grid Search) 형태의 자동화 실험 결과, 본 프로젝트의 환경에서는 **Alpha=0.1, Gamma=0.99**가 최적의 하이퍼파라미터임을 수치적으로 검증했습니다.
 
-## 5. 학습된 정책 시각화 및 검증 (Policy Visualization)
+## 4. 학습된 정책 시각화 및 검증 (Policy Visualization)
 최적 파라미터로 도출된 최종 Q-Table을 바탕으로, 에이전트가 4x4 그리드의 각 상태에서 내린 결정(방향 화살표)을 시각화했습니다.
 
 ![Learned Policy](results/policy_arrows.png)
@@ -84,12 +73,12 @@ python train.py
 * **안전 지향적 우회:** 구멍(H)과 인접한 위험 구간에서 구멍을 향하는 행동의 Q-값이 완벽하게 억제되어, 안전한 경로를 최우선으로 선택하는 것을 확인했습니다.
 * **최단 경로(Shortest Path) 도출:** 매 스텝마다 부여된 `-0.01`의 시간 지연 패널티 덕분에, 에이전트가 제자리걸음이나 빙빙 도는 행위 없이 시작점(S)에서 목표점(G)까지 최단 거리로 직진하는 완벽한 맵 이해도를 달성했음을 시각적으로 증명했습니다.
 
-## 6. 향후 과제 (Future Work)
+## 5. 향후 과제 (Future Work)
 본 프로젝트에서 구현한 전통적인 Q-Table 방식은 상태(State)가 한정된 FrozenLake(16개)와 같은 소규모 환경에서는 강력합니다. 
 
 하지만 연속적인 상태 공간을 가지거나 복잡한 화면 이미지를 입력으로 받는 환경에서는 **상태 폭발(State Explosion)** 문제가 발생하여 표(Table)로 저장하는 것이 불가능합니다. 향후 본 프로젝트의 아키텍처를 기반으로, Q-Table을 딥러닝 신경망으로 대체하여 가치를 예측하는 **DQN(Deep Q-Network)** 알고리즘으로 모델을 확장해 나갈 계획입니다.
 
-## 7.💡 회고록 (Retrospective)
+## 6.💡 회고록 (Retrospective)
 
 이번 프로젝트를 진행하며 단순히 기능이 동작하는 수준을 넘어, 엔지니어링 역량과 분석력을 키울 수 있었습니다.
 
