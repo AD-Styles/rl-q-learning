@@ -59,7 +59,7 @@ python train.py
 ## 3. 실험 결과 및 분석 (Results & Analysis)
 환경의 불확실성(`is_slippery`) 여부와 커스텀 보상 설계에 따른 학습 성능을 분석했습니다.
 
-![Learning Curve](learning_curve.png)
+![Learning Curve](results/learning_curve.png)
 
 | 환경 및 보상 체계 | 수렴 속도 | 목표 도달 안정성 | 엔지니어링 분석 포인트 |
 | :--- | :--- | :--- | :--- |
@@ -79,7 +79,7 @@ python train.py
 ## 5. 학습된 정책 시각화 및 검증 (Policy Visualization)
 최적 파라미터로 도출된 최종 Q-Table을 바탕으로, 에이전트가 4x4 그리드의 각 상태에서 내린 결정(방향 화살표)을 시각화했습니다.
 
-![Learned Policy](policy_arrows.png)
+![Learned Policy](results/policy_arrows.png)
 
 * **안전 지향적 우회:** 구멍(H)과 인접한 위험 구간에서 구멍을 향하는 행동의 Q-값이 완벽하게 억제되어, 안전한 경로를 최우선으로 선택하는 것을 확인했습니다.
 * **최단 경로(Shortest Path) 도출:** 매 스텝마다 부여된 `-0.01`의 시간 지연 패널티 덕분에, 에이전트가 제자리걸음이나 빙빙 도는 행위 없이 시작점(S)에서 목표점(G)까지 최단 거리로 직진하는 완벽한 맵 이해도를 달성했음을 시각적으로 증명했습니다.
