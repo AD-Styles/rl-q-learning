@@ -35,15 +35,16 @@ $$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
 ├── q_agent.py       # Q-Table 관리 및 학습 알고리즘(두뇌) 클래스
 ├── train.py         # 하이퍼파라미터 설정 및 메인 학습 루프 실행
 ├── utils.py         # 학습 결과(성공률, 보상 등) 시각화 도구
+├── requirements.txt # 의존성 라이브러리 목록 (추가)
 ├── README.md        # 프로젝트 설명 문서
-└── .gitignore       
+└── .gitignore   
 ```
 
 ## 5. 실행 방법 (Quick Start)
 
 ### Requirements 설치
 ```bash
-pip install numpy matplotlib gymnasium
+pip install -r requirements.txt
 ```
 
 ### 학습 파이프라인 실행
