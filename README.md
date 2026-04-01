@@ -27,9 +27,10 @@ Gymnasium 라이브러리에서 제공하는 `FrozenLake-v1` 환경을 사용했
 
 $$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
 
-### 학습 파이프라인 실행
+### 🧠 학습 파이프라인 실행
 결정적 환경(`is_slippery=False`)에서 에이전트를 5,000 에피소드 동안 학습시킵니다. 
 * **적용된 하이퍼파라미터:** 학습률($\alpha$)=0.1, 할인율($\gamma$)=0.99, 탐험률($\epsilon$)=1.0 (감소율 적용)
+
 
 
 ## 1. 프로젝트 구조 (Repository Structure)
