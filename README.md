@@ -31,6 +31,7 @@ $$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$
 결정적 환경(`is_slippery=False`)에서 에이전트를 5,000 에피소드 동안 학습시킵니다. 
 * **적용된 하이퍼파라미터:** 학습률($\alpha$)=0.1, 할인율($\gamma$)=0.99, 탐험률($\epsilon$)=1.0 (감소율 적용)
 
+
 ## 1. 프로젝트 구조 (Repository Structure)
 유지보수와 확장이 용이하도록 역할을 분리하여 모듈화했습니다.
 
