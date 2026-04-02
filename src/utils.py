@@ -1,42 +1,67 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 import seaborn as sns
 
-def plot_learning_curve(rewards_history: list, window: int = 100, save_path: str = "learning_curve.png"):
-    moving_avg = [np.mean(rewards_history[max(0, i - window):i + 1]) for i in range(len(rewards_history))]
+def plot_learning_curve(rewards, save_path="results/learning_curve.png", window=100):
+    """
+    학습 진행에 따른 에피소드별 보상을 이동 평균(Moving Average)으로 시각화.
+    """
     plt.figure(figsize=(10, 5))
-    plt.plot(moving_avg, color='blue', label=f'Moving Average (Window={window})')
-    plt.title('Q-Learning Learning Curve (FrozenLake)')
-    plt.xlabel('Episodes')
-    plt.ylabel('Success Rate / Reward')
+    
+    # 윈도우 사이즈를 기반으로 이동 평균 계산
+    if len(rewards) >= window:
+        moving_avg = [np.mean(rewards[max(0, i - window):i + 1]) for i in range(len(rewards))]
+        plt.plot(moving_avg, color='teal', linewidth=2, label=f'Moving Avg (Window={window})')
+    else:
+        plt.plot(rewards, color='teal', linewidth=2, label='Reward')
+        
+    plt.title("Training Learning Curve", fontsize=15, fontweight='bold')
+    plt.xlabel("Episodes", fontsize=12)
+    plt.ylabel("Reward (Moving Avg)", fontsize=12)
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.legend()
+    plt.tight_layout()
     plt.savefig(save_path)
     plt.close()
-    print(f"📊 학습 곡선 그래프가 '{save_path}'로 저장되었습니다!")
 
-def plot_policy(q_table: np.ndarray, map_size: int = 4, save_path: str = "policy_arrows.png"):
+def visualize_optimal_policy(q_table, env_map, save_path):
     """
-    Q-Table을 바탕으로 에이전트의 최적 정책(방향 화살표)을 4x4 그리드 위에 시각화합니다.
+    환경에서 동적으로 추출한 맵 데이터(env_map)를 바탕으로 최적 정책을 시각화.
     """
-    directions = {0: '←', 1: '↓', 2: '→', 3: '↑'}
-    best_actions = np.argmax(q_table, axis=1).reshape(map_size, map_size)
+    # 맵의 동적 크기 측정 (4x4, 8x8 등 모두 호환)
+    grid_size = env_map.shape[0]
     
-    fig, ax = plt.subplots(figsize=(5, 5))
-    ax.set_xlim(0, map_size)
-    ax.set_ylim(0, map_size)
+    # 행동(Action) 값을 화살표 기호로 매핑 (FrozenLake 기준: 0:Left, 1:Down, 2:Right, 3:Up)
+    arrow_map = {0: '←', 1: '↓', 2: '→', 3: '↑'}
     
-    for i in range(map_size):
-        for j in range(map_size):
-            action = best_actions[i, j]
-            # y좌표는 위에서 아래로 그려지도록 뒤집음
-            ax.text(j + 0.5, map_size - i - 0.5, directions[action],
-                    ha='center', va='center', fontsize=20)
+    fig, ax = plt.subplots(figsize=(grid_size * 1.5, grid_size * 1.5))
+    
+    # 배경 그리드 생성
+    grid = np.zeros((grid_size, grid_size))
+    sns.heatmap(grid, annot=False, cmap="Blues", cbar=False, linewidths=1, linecolor='black', ax=ax)
+    
+    # 동적 맵 데이터를 순회하며 화살표 텍스트 삽입
+    for i in range(grid_size):
+        for j in range(grid_size):
+            state = i * grid_size + j
+            char = env_map[i][j].decode('utf-8')  # 바이트 문자열 디코딩
             
-    ax.set_xticks(np.arange(map_size))
-    ax.set_yticks(np.arange(map_size))
-    ax.grid(color='black', linestyle='-', linewidth=1)
-    plt.title('Learned Policy (Q-Table)')
+            text = char
+            color = "black"
+            
+            if char == 'H': 
+                color = "red"
+            elif char == 'G':
+                color = "green"
+            else: 
+                best_action = np.argmax(q_table[state])
+                text = f"{char}\n{arrow_map[best_action]}"
+                
+            ax.text(j + 0.5, i + 0.5, text, ha='center', va='center', 
+                    color=color, fontsize=16, fontweight='bold')
+    
+    plt.title("Agent's Optimal Policy Navigation", fontsize=16, fontweight='bold', pad=15)
+    plt.axis('off')
+    plt.tight_layout()
     plt.savefig(save_path)
     plt.close()
-    print(f"🧭 정책 시각화 이미지가 '{save_path}'로 저장되었습니다!")
