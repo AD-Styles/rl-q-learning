@@ -46,7 +46,7 @@
 | **🏆 최종 결론** | **Alpha=0.1**<br>**Gamma=0.99** | 그리드 서치(Grid Search) 형태의 자동화 실험 결과,<br>본 프로젝트의 환경에서는 해당 조합이 최적의 하이퍼파라미터임을 검증했습니다. |
 
 ## 4. 학습된 정책 시각화 및 검증 (Policy Visualization)
-![Learned Policy](results/policy_arrows.png)
+![Learned Policy](results/frozenlake_optimal_policy.png)
 
 | 정책 검증 포인트 | 세부 분석 내용 |
 | :--- | :--- |
