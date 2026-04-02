@@ -23,12 +23,14 @@
 | **적용된 파라미터** | 학습률(Alpha)=0.1, 할인율(Gamma)=0.99, 탐험률(Epsilon)=1.0 (감소율 적용) |
 
 ## 1. 프로젝트 구조 (Repository Structure)
-| 디렉토리 / 파일 | 설명 |
-| :--- | :--- |
-| **`src/`** | 핵심 강화학습 파이프라인 모듈 (`environment.py`, `q_agent.py`, `train.py`, `utils.py`) |
-| **`results/`** | 도출된 학습 곡선 및 정책 시각화 이미지 |
-| **`requirements.txt`** | 의존성 패키지 목록 |
-| **`README.md`** | 프로젝트 설명 문서 |
+
+```text
+├─ results/  # 도출된 학습 곡선 및 정책 시각화 이미지
+├─ src/  # 핵심 강화학습 파이프라인 모듈 (environment.py, q_agent.py, train.py, utils.py)
+├─ .gitignore  
+├─ LICENSE  
+├─ README.md  # 프로젝트 설명 문서
+└─ requirements.txt  # 의존성 패키지 목록
 
 ## 2. 실험 결과 및 분석 (Results & Analysis)
 ![Learning Curve](results/learning_curve.png)
