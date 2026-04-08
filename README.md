@@ -4,8 +4,12 @@
 ![Gymnasium](https://img.shields.io/badge/Gymnasium-0.29.1-lightgrey.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
+---
+
 ## 📌 프로젝트 요약 (Project Overview)
 본 프로젝트는 강화학습의 핵심 기초 알고리즘인 **Q-Learning**을 활용하여, 에이전트가 살얼음판(FrozenLake) 미로를 무사히 건너 목표 지점에 도달하도록 학습시키는 파이썬(Python) 기반의 구현체입니다. 단일 스크립트 형태를 벗어나, 에이전트(Agent)와 환경(Environment)을 분리한 **객체지향(OOP) 구조**로 설계하여 코드의 재사용성과 가독성을 높였습니다.
+
+---
 
 ## 🎯 핵심 목표 (Motivation)
 | 구분 | 세부 내용 |
@@ -14,6 +18,8 @@
 | **마르코프 결정과정(MDP) 이해** | 탐험(Exploration)과 활용(Exploitation)의 균형을 맞추는<br>epsilon-Greedy 전략을 적용합니다. |
 | **확률적 환경 분석** | 미끄러짐(Slippery) 유무에 따른 환경의 난이도 변화와<br>Q-Table의 수렴 차이를 분석합니다. |
 
+---
+
 ## 🚨 환경 소개 및 파이프라인 (Environment & Pipeline)
 | 항목 | 세부 내용 |
 | :--- | :--- |
@@ -21,6 +27,8 @@
 | **사용된 알고리즘** | 벨만 방정식 기반 Q-Learning<br>$$Q(s,a) \leftarrow Q(s,a) + \alpha [r + \gamma \max_{a'} Q(s',a') - Q(s,a)]$$ |
 | **학습 파이프라인** | 결정적 환경(`is_slippery=False`)에서 에이전트를 5,000 에피소드 동안 학습 |
 | **적용된 파라미터** | 학습률(Alpha)=0.1, 할인율(Gamma)=0.99, 탐험률(Epsilon)=1.0 (감소율 적용) |
+
+---
 
 ## 1. 프로젝트 구조 (Repository Structure)
 
