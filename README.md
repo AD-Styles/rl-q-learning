@@ -41,6 +41,8 @@
 └─ requirements.txt  # 의존성 패키지 목록
 ```
 
+---
+
 ## 2. 실험 결과 및 분석 (Results & Analysis)
 ![Learning Curve](results/learning_curve.png)
 
